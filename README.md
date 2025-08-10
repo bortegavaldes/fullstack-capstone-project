@@ -1,1 +1,1 @@
-# coding-project-template
+# Project Capstone for JS-FullStack Certificate
