@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './DetailsPage.css';
+import { urlConfig } from '../../config';
 
 function DetailsPage() {
     const navigate = useNavigate();
@@ -75,6 +76,11 @@ function DetailsPage() {
     if (error) return <div>Error: {error}</div>;
     if (!gift) return <div>Gift not found</div>;
 
+    const formattedDate = (timestamp) => {
+        const date = new Date(timestamp * 1000);
+        return `${String(date.getDate()).padStart(2,'')}/${String(date.getMonth()+1).padStart(2,'')}/${date.getFullYear()}`;
+    };
+
     return (
         <div className="container mt-5">
             <button className="btn btn-secondary mb-3" onClick={handleBackClick}>Back</button>
@@ -85,34 +91,31 @@ function DetailsPage() {
                 <div className="card-body">
                     <div className="image-placeholder-large">
                         {gift.image ? (
-                            // Task 5: Display gift image
                             <img src={gift.image} alt={gift.name} className="product-image-large" />
                         ) : (
                             <div className="no-image-available-large">No Image Available</div>
                         )}
                     </div>
-                    // Task 6: Display gift details
-                    <p><strong>Category:</strong>
+                    <p><strong>Category:&nbsp;</strong>
                         {gift.category}
                     </p>
-                    <p><strong>Condition:</strong>
+                    <p><strong>Condition:&nbsp;</strong>
                         {gift.condition}
                     </p>
-                    <p><strong>Date Added:</strong>
-                        {gift.dateAdded}
+                    <p><strong>Date Added:&nbsp;</strong>
+                        {formattedDate(gift.date_added)}
                     </p>
-                    <p><strong>Age (Years):</strong>
-                        {gift.age}
+                    <p><strong>Age (Years):&nbsp;</strong>
+                        {gift.age_years}
                     </p>
-                    <p><strong>Description:</strong>
+                    <p><strong>Description:&nbsp;</strong>
                         {gift.description}
                     </p>
                 </div>
             </div>
             <div className="comments-section mt-4">
                 <h3 className="mb-3">Comments</h3>
-				// Task 7: Render comments section by using the map function to go through all the comments
-                {comments.map((comment, index)(
+                {comments.map((comment, index) => (
                     <div key={index} className="card mb-3">
                         <div className="card-body">
                             <p className="comment-author"><strong>{comment.author}:</strong></p>
